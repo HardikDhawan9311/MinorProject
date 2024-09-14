@@ -1,12 +1,17 @@
 import { useState } from 'react'
+import Background  from './Background'
+import Navbar from './Navbar'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  
 
   return (
     <>
-      <h1 className='bg-zinc-700 text-center text-6xl text-bold text-white'>Coming soon !!</h1>
+      <div>
+        <Background />
+        <Navbar/>
+      </div>
     </>
   )
 }
