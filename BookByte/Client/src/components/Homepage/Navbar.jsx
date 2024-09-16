@@ -15,14 +15,14 @@ const Navbar = () => {
   return (
     <>
       <nav className="relative p-4">
-        <div className="container mx-auto flex justify-between items-center mt-4">
+        <div className="container mx-auto flex justify-between items-center ">
           {/* Logo */}
           <div className='h-30 w-40'>
             <img src={Logo} alt="logo" />
           </div>
 
           {/* Navigation Links */}
-          <ul className="flex space-x-28 items-center text-xl">
+          <ul className="flex space-x-20 items-center text-l">
             <li className="text-white hover:text-gray-300">
               <a href="/">Home</a>
             </li>
