@@ -89,7 +89,7 @@ const Navbar = () => {
             <p className="mt-6 text-center text-sm text-gray-600">
           Create Your Account ?{' '}
           <a href="/signup" className="text-blue-500 underline">
-            Sign up here
+            Sign up here !
 
           </a>
         </p>
