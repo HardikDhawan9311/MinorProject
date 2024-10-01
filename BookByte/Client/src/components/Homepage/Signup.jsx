@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import { EyeIcon, EyeSlashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,8 +44,6 @@ const SignUpForm = () => {
     return newErrors;
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
@@ -75,10 +73,19 @@ const SignUpForm = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate('/'); // Redirect to the homepage
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-500">
-      <div className="bg-white p-10 rounded-lg shadow-xl w-full max-w-lg">
+      <div className="relative bg-white p-10 rounded-lg shadow-xl w-full max-w-lg">
+        <button 
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+          onClick={handleCancel}
+        >
+          <XMarkIcon className="h-6 w-6" />
+        </button>
         <h2 className="text-3xl font-bold mb-6 text-center">CREATE ACCOUNT</h2>
         {serverError && <p className="text-red-500 text-sm mb-4">{serverError}</p>}
         <form onSubmit={handleSubmit}>
