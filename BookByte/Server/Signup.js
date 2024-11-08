@@ -48,7 +48,18 @@ app.post('/signup', (req, res) => {
         console.error('Database error:', err);
         return res.status(500).json({ error: 'An error occurred' });
       }
-      res.status(201).json({ message: 'User registered successfully' });
+      
+      // Store user info to send back
+      const userInfo = { 
+        name, 
+        username, 
+        email 
+      };
+      
+      res.status(201).json({ 
+        message: 'User  registered successfully', 
+        user: userInfo 
+      });
     });
   });
 });
@@ -68,12 +79,28 @@ app.post('/login', (req, res) => {
 
     if (result.length > 0) {
       // User found, login successful
-      res.status(200).json({ success: true, message: 'Login successful' });
+      // Extract user information (exclude sensitive data like password)
+      const userInfo = {
+        id: result[0].id,
+        name: result[0].name,
+        username: result[0].username,
+        email: result[0].email,
+        phoneNumber: result[0].phonenumber
+      };
+
+      res.status(200).json({ 
+        success: true, 
+        message: 'Login successful',
+        user: userInfo 
+      });
     } else {
       // User not found, login failed
-      res.status(401).json({ success: false, message: 'User not registered. Please register yourself.' });
+      res.status(401).json({ 
+        success: false, 
+        message: 'Invalid username or password' 
+      });
     }
-  });
+  }); // Closing bracket for the login route
 });
 
 // Start the server

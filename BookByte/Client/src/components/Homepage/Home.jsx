@@ -1,17 +1,35 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import Background  from './Background'
 import Navbar from './Navbar'
 import Img from "../../assets/Homeimg.gif"
 
 
 function App() {
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    // Check authentication status when component mounts
+    const checkAuthStatus = () => {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const user = JSON.parse(storedUser);
+        setIsAuthenticated(true);
+        setUserName(user.username);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
 
   return (
     <>
       <div>
         <Background />
-        <Navbar/>
+        <Navbar
+        isAuthenticated={isAuthenticated} 
+        userName={userName} 
+      /> 
         <div className='flex flex-row justify-between'>
           <div className='flex flex-col'>
           <h1 className='relative font-bold mt-24 text-white ml-24 text-center text-6xl'>

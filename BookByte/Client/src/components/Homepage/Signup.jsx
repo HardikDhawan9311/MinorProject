@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Background  from './Background'
 
 const SignUpForm = () => {
   const [formData, setFormData] = useState({
@@ -49,17 +50,19 @@ const SignUpForm = () => {
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length === 0) {
       try {
-        // Send a POST request to the backend
         const response = await axios.post('http://localhost:5000/signup', {
           name: formData.name,
           username: formData.username,
-          email: formData.email, // Include email in the request
+          email: formData.email,
           phoneNumber: formData.phoneNumber,
           password: formData.password,
         });
-        console.log(response.data);
+        
+        // Store user info in localStorage
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        
         // Redirect to the homepage after successful registration
-        navigate('/'); // Adjust the path as needed
+        navigate('/');
       } catch (error) {
         console.error('There was an error registering the user!', error);
         if (error.response && error.response.data && error.response.data.error) {
@@ -78,7 +81,8 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-teal-500">
+    <div className="flex items-center justify-center min-h-screen ">
+      <Background />
       <div className="relative bg-white p-10 rounded-lg shadow-xl w-full max-w-lg">
         <button 
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"

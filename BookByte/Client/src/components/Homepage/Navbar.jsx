@@ -1,11 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Logo from '../../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Navbar = ({ isAuthenticated, userName }) => {
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state for logout
+  const navigate = useNavigate();
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData({ ...loginData, [name]: value });
+  };
 
   const handleLoginClick = () => {
     setShowLoginForm(true);
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/login', loginData);
+      if (response.data.success) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        window.location.reload();
+      }
+    } catch (error) {
+      setLoginError(error.response?.data?.message || 'An unexpected error occurred');
+    }
+  };
+
+  const handleLogout = () => {
+    setLoading(true); // Start loading
+    setTimeout(() => {
+      localStorage.removeItem('user');
+      setLoading(false); // End loading after 1 second
+      window.location.reload();
+    }, 1000);
   };
 
   const handleCloseForm = () => {
@@ -16,12 +49,9 @@ const Navbar = ({ isAuthenticated, userName }) => {
     <>
       <nav className="relative p-4">
         <div className="container mx-auto flex justify-between items-center">
-          {/* Logo */}
           <div className="h-30 w-40">
             <img src={Logo} alt="logo" />
           </div>
-
-          {/* Navigation Links */}
           <ul className="flex space-x-20 items-center text-l">
             <li className="text-white hover:text-gray-300">
               <a href="/">Home</a>
@@ -33,24 +63,25 @@ const Navbar = ({ isAuthenticated, userName }) => {
               <a href="/chat">Chat</a>
             </li>
           </ul>
-
-          {/* User Info or Sign In and Login Buttons */}
           <div className="flex space-x-4">
             {isAuthenticated ? (
               <div className="flex items-center space-x-2">
-                {/* User Avatar */}
                 <div className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center text-white">
-                  {/* This could be replaced with an actual avatar */}
                   {userName.charAt(0).toUpperCase()}
                 </div>
-                {/* Username */}
                 <span className="text-white">{userName}</span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                  disabled={loading} // Disable button when loading
+                >
+                  {loading ? 'Logging out...' : 'Logout'}
+                </button>
               </div>
             ) : (
               <>
                 <button
                   className="bg-transparent text-white border border-white px-4 py-2 rounded hover:bg-yellow-300 hover:text-gray-800"
-                  onClick={() => setShowLoginForm(false)}
                 >
                   <a href="/Signup">Sign up</a>
                 </button>
@@ -66,11 +97,9 @@ const Navbar = ({ isAuthenticated, userName }) => {
         </div>
       </nav>
 
-      {/* Login Form */}
       {showLoginForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-75 z-20">
           <div className="relative bg-white p-12 rounded-lg shadow-2xl max-w-md w-full transition-transform transform hover:scale-105 duration-300">
-            {/* Close Button */}
             <button
               onClick={handleCloseForm}
               className="absolute top-2 right-2 text-gray-700 hover:text-gray-900 text-2xl focus:outline-none"
@@ -78,11 +107,14 @@ const Navbar = ({ isAuthenticated, userName }) => {
               &times;
             </button>
             <h2 className="text-3xl mb-6 font-semibold text-center text-gray-800">Login</h2>
-            <form>
+            <form onSubmit={handleLoginSubmit}>
               <div className="mb-6">
-                <label className="block text-gray-700 text-sm font-medium">Email:</label>
+                <label className="block text-gray-700 text-sm font-medium">Username:</label>
                 <input
-                  type="email"
+                  type="text"
+                  name="username"
+                  value={loginData.username}
+                  onChange={handleLoginChange}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
                 />
               </div>
@@ -90,10 +122,12 @@ const Navbar = ({ isAuthenticated, userName }) => {
                 <label className="block text-gray-700 text-sm font-medium">Password:</label>
                 <input
                   type="password"
+                  name="password"
+                  value={loginData.password}
+                  onChange={handleLoginChange}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-300"
                 />
               </div>
-              {/* Forget Password Link */}
               <div className="text-right mb-6">
                 <a href="/forgot-password" className="text-blue-500 underline text-sm hover:text-blue-700">
                   Forgot Password?
@@ -105,9 +139,10 @@ const Navbar = ({ isAuthenticated, userName }) => {
               >
                 Submit
               </button>
+              {loginError && <p className="text-red-500 mt-4 text-center">{loginError}</p>}
             </form>
             <p className="mt-6 text-center text-sm text-gray-600">
-              Create Your Account?{' '}
+              Don't have an account?{' '}
               <a href="/signup" className="text-blue-500 underline">
                 Sign up here!
               </a>
