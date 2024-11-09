@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Logo from '../../assets/logo.png';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -7,7 +7,9 @@ const Navbar = ({ isAuthenticated, userName }) => {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [loginData, setLoginData] = useState({ username: '', password: '' });
   const [loginError, setLoginError] = useState('');
-  const [loading, setLoading] = useState(false); // Loading state for logout
+  const [loading, setLoading] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
   const handleLoginChange = (e) => {
@@ -33,12 +35,34 @@ const Navbar = ({ isAuthenticated, userName }) => {
   };
 
   const handleLogout = () => {
-    setLoading(true); // Start loading
+    setLoading(true);
     setTimeout(() => {
       localStorage.removeItem('user');
-      setLoading(false); // End loading after 1 second
+      setLoading(false);
       window.location.reload();
     }, 1000);
+  };
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
+  const handleAccountClick = () => {
+    navigate('/account');
   };
 
   const handleCloseForm = () => {
@@ -64,20 +88,42 @@ const Navbar = ({ isAuthenticated, userName }) => {
             </li>
           </ul>
           <div className="flex space-x-4">
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center text-white">
-                  {userName.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-white">{userName}</span>
-                <button
-                  onClick={handleLogout}
-                  className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
-                  disabled={loading} // Disable button when loading
-                >
-                  {loading ? 'Logging out...' : 'Logout'}
-                </button>
+
+          {isAuthenticated ? (
+            <div className="flex items-center space-x-2 relative" ref={dropdownRef}>
+              <span className="text-white">{userName}</span>
+              <div 
+                className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center text-white cursor-pointer"
+                onClick={() => setShowDropdown(!showDropdown)}
+              >
+                {userName.charAt(0).toUpperCase()}
               </div>
+              
+              {showDropdown && (
+                <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
+                  <ul className="py-1">
+                    <li 
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={handleProfileClick}
+                    >
+                      Profile
+                    </li>
+                    <li 
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={handleAccountClick}
+                    >
+                      Account
+                    </li>
+                    <li 
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                      onClick={handleLogout}
+                    >
+                      {loading ? 'Logging out...' : 'Logout'}
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
             ) : (
               <>
                 <button
@@ -155,3 +201,4 @@ const Navbar = ({ isAuthenticated, userName }) => {
 };
 
 export default Navbar;
+
