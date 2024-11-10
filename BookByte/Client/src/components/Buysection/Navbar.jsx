@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
-
 const Navbar = () => {
     const navigate = useNavigate();
 
@@ -13,13 +12,7 @@ const Navbar = () => {
                     className="h-6 w-6 text-gray-600 cursor-pointer hover:text-blue-500"
                     onClick={() => navigate('/')} 
                 />
-                
             </div>
-            <input 
-                type="text" 
-                placeholder="Search..." 
-                className="w-full p-2 mb-4 border rounded"
-            />
             <ul className="space-y-2">
                 <li className="hover:text-blue-500 cursor-pointer">Recommended</li>
                 <li className="hover:text-blue-500 cursor-pointer">Most Read</li>

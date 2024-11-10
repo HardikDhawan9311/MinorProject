@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { EyeIcon, EyeSlashIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Background  from './Background'
+import Background from './Background';
 
-const SignUpForm = () => {
+const SignUpForm = ({ isAuthenticated, userName }) => {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
@@ -16,7 +16,10 @@ const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
-  const navigate = useNavigate(); 
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,10 +60,10 @@ const SignUpForm = () => {
           phoneNumber: formData.phoneNumber,
           password: formData.password,
         });
-        
+
         // Store user info in localStorage
         localStorage.setItem('user', JSON.stringify(response.data.user));
-        
+
         // Redirect to the homepage after successful registration
         navigate('/');
       } catch (error) {
@@ -80,11 +83,25 @@ const SignUpForm = () => {
     navigate('/'); // Redirect to the homepage
   };
 
+  const handleProfileClick = () => {
+    // Handle profile click
+  };
+
+  const handleAccountClick = () => {
+    // Handle account click
+  };
+
+  const handleLogout = () => {
+    setLoading(true);
+    // Logic for logging out
+    setLoading(false);
+  };
+
   return (
-    <div className="flex items-center justify-center min-h-screen ">
+    <div className="flex items-center justify-center min-h-screen">
       <Background />
       <div className="relative bg-white p-10 rounded-lg shadow-xl w-full max-w-lg">
-        <button 
+        <button
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
           onClick={handleCancel}
         >
@@ -93,7 +110,6 @@ const SignUpForm = () => {
         <h2 className="text-3xl font-bold mb-6 text-center">CREATE ACCOUNT</h2>
         {serverError && <p className="text-red-500 text-sm mb-4">{serverError}</p>}
         <form onSubmit={handleSubmit}>
-          {/* Form Fields */}
           <div className="mb-4">
             <input
               type="text"
@@ -177,6 +193,28 @@ const SignUpForm = () => {
             SIGN UP
           </button>
         </form>
+        {isAuthenticated && (
+          <div className="flex items-center space-x-2 relative" ref={dropdownRef}>
+            <span className="text-white">{userName}</span>
+            <div
+              className="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center text-white cursor-pointer"
+              onClick={() => setShowDropdown(!showDropdown)}
+            >
+              {userName.charAt(0).toUpperCase()}
+            </div>
+            {showDropdown && (
+              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg z-50">
+                <ul className="py-1">
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleProfileClick}>Profile</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={handleAccountClick}>Account</li>
+                  <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500" onClick={handleLogout}>
+                    {loading ? 'Logging out...' : 'Logout'}
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
