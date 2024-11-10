@@ -9,7 +9,7 @@ function CreateRoomForm({ onCreateRoom }) {
 
   const generateRoomLink = (roomName) => {
     const uniqueId = uuidv4();
-    const baseURL = 'http://localhost:3000';
+    const baseURL = 'http://localhost:5000';
     return `${baseURL}/ChatRoom/${encodeURIComponent(roomName)}-${uniqueId}`;
   };
 

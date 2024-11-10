@@ -47,3 +47,18 @@ app.use(bookRoutes); // Use the books route
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+
+app.get('/book/isbn_no', (req, res) => {
+  const { isbn_no } = req.params;
+pool.execute('SELECT * FROM books WHERE isbn_no = ?', [isbn_no], (err, results) => {
+  if (err) {
+    return res.status(500).json({ message: 'Error fetching book details' });
+  }
+  if (results.length > 0) {
+    res.json(results[0]); // Send the full book details as a response
+  } else {
+    res.status(404).json({ message: 'Book not found' });
+  }
+});
+});
