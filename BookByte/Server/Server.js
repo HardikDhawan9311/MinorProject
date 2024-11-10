@@ -13,19 +13,20 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Create a MySQL connection
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: 'Hardik@9311',
-//   database: 'BookByte',
-// });
 
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '123456',
+  password: 'Hardik@9311',
   database: 'BookByte',
 });
+
+// const db = mysql.createConnection({
+//   host: 'localhost',
+//   user: 'root',
+//   password: '123456',
+//   database: 'BookByte',
+// });
 
 // Connect to the database
 db.connect(err => {

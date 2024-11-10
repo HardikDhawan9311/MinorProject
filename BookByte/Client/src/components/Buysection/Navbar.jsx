@@ -64,7 +64,7 @@ const Navbar = () => {
             </ul>
 
             {/* Footer Section (Optional) */}
-            <div className="mt-8">
+            <div className="mt-64">
                 <p className="text-white text-sm text-center opacity-80">Transform your reading experience</p>
             </div>
         </div>
