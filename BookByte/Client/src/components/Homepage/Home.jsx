@@ -11,17 +11,17 @@ function App() {
   useEffect(() => {
     // Check authentication status when component mounts
     const checkAuthStatus = () => {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        try {
-          const user = JSON.parse(storedUser);
-          setIsAuthenticated(true);
-          setUserName(user.username);
-        } catch (error) {
-          console.error("Failed to parse user data from localStorage:", error);
-        }
+      const storedUser  = localStorage.getItem('user');
+      if (storedUser ) {
+          try {
+              const user = JSON.parse(storedUser );
+              setIsAuthenticated(true);
+              setUserName(user.username); // Corrected line
+          } catch (error) {
+              console.error("Failed to parse user data from localStorage:", error);
+          }
       }
-    };
+  };
   
     checkAuthStatus();
   }, []);

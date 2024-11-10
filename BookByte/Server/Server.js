@@ -1,9 +1,9 @@
-// server.js
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const signupRoutes = require('./Signup'); // Import the signup.js routes
+const signupRoutes = require('./Signup');
+const bookRoutes = require('./books'); // Import the books route
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,8 +39,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// Use the signup routes
+// Use routes
 app.use(signupRoutes);
+app.use(bookRoutes); // Use the books route
 
 // Start the server
 app.listen(PORT, () => {
