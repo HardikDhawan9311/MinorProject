@@ -121,7 +121,7 @@ function App() {
             <li>
               <button 
                 className="w-full hover:bg-blue-700 px-4 py-2 rounded-lg transition-all text-lg"
-                onClick={() => navigate('/home')}
+                onClick={() => navigate('/chat')}
               >
                 Home
               </button>

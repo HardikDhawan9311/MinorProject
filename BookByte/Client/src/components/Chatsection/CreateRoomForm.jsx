@@ -79,19 +79,33 @@ function CreateRoomForm({ onCreateRoom }) {
 
   const generateRoomLink = (roomName) => {
     const uniqueId = uuidv4();
-    const baseURL = 'http://localhost:5000';
+    const baseURL = window.location.origin;
     return `${baseURL}/ChatRoom/${encodeURIComponent(roomName)}-${uniqueId}`;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (roomName) {
-      const link = generateRoomLink(roomName);
-      setRoomLink(link);
+
+    if (!roomName.trim()) {
+      alert('Room Name cannot be empty.');
+      return;
+    }
+
+    const link = generateRoomLink(roomName);
+    setRoomLink(link);
+    if (onCreateRoom) {
       onCreateRoom(roomName, link);
+    } else {
+      console.warn('onCreateRoom is not defined. Proceeding without parent callback.');
+    }
+
+    try {
       setTimeout(() => {
-        navigate(`/ChatRoom/${roomName}-${link.split('-').pop()}`, { state: { roomLink: link } });
-      }, 100);
+        const uniqueId = link.split('/').pop(); // Safer extraction logic
+        navigate(`/ChatRoom/${uniqueId}`, { state: { roomLink: link } });
+      }, 1000);
+    } catch (err) {
+      console.error('Navigation error:', err);
     }
   };
 
@@ -135,4 +149,5 @@ function CreateRoomForm({ onCreateRoom }) {
 }
 
 export default CreateRoomForm;
+
 

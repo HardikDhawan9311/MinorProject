@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const signupRoutes = require('./Signup');
 const bookRoutes = require('./books'); // Import the books route
+const chatRoutes = require('./chat');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 // Use routes
 app.use(signupRoutes);
 app.use(bookRoutes); // Use the books route
+app.use(chatRoutes);
 
 // Start the server
 app.listen(PORT, () => {
@@ -50,7 +52,7 @@ app.listen(PORT, () => {
 });
 
 
-app.get('/book/isbn_no', (req, res) => {
+app.get('/books/isbn_no', (req, res) => {
   const { isbn_no } = req.params;
 pool.execute('SELECT * FROM books WHERE isbn_no = ?', [isbn_no], (err, results) => {
   if (err) {
