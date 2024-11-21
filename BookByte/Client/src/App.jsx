@@ -83,7 +83,7 @@ function App() {
         <Route path="/books/:isbn_no" element={<BookMainPage />} />
         <Route path="/create-room" element={<CreateRoomForm />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/chat/chat-room" element={<ChatRoom />} />
+        <Route path="/ChatRoom/:roomId" element={<ChatRoom />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/logout" element={<Logout />} />
