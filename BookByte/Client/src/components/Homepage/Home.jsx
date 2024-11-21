@@ -9,14 +9,14 @@ function App() {
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
-    // Check authentication status when component mounts
+    
     const checkAuthStatus = () => {
       const storedUser  = localStorage.getItem('user');
       if (storedUser ) {
           try {
               const user = JSON.parse(storedUser );
               setIsAuthenticated(true);
-              setUserName(user.username); // Corrected line
+              setUserName(user.username); 
           } catch (error) {
               console.error("Failed to parse user data from localStorage:", error);
           }
@@ -26,7 +26,7 @@ function App() {
     checkAuthStatus();
   }, []);
   
-  const [activeIndex, setActiveIndex] = useState(null); // Track the active question index
+  const [activeIndex, setActiveIndex] = useState(null); 
 
   const faqData = [
 
@@ -58,7 +58,7 @@ function App() {
   ];
 
   const toggleFAQ = (index) => {
-    setActiveIndex(activeIndex === index ? null : index); // Toggle active index
+    setActiveIndex(activeIndex === index ? null : index); 
   };
 
   

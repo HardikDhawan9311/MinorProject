@@ -61,10 +61,10 @@ const SignUpForm = ({ isAuthenticated, userName }) => {
           password: formData.password,
         });
 
-        // Store user info in localStorage
+        
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
-        // Redirect to the homepage after successful registration
+        
         navigate('/');
       } catch (error) {
         console.error('There was an error registering the user!', error);
@@ -80,20 +80,20 @@ const SignUpForm = ({ isAuthenticated, userName }) => {
   };
 
   const handleCancel = () => {
-    navigate('/'); // Redirect to the homepage
+    navigate('/'); 
   };
 
   const handleProfileClick = () => {
-    // Handle profile click
+    
   };
 
   const handleAccountClick = () => {
-    // Handle account click
+    
   };
 
   const handleLogout = () => {
     setLoading(true);
-    // Logic for logging out
+    
     setLoading(false);
   };
 

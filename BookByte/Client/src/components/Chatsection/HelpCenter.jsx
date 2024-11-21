@@ -61,7 +61,7 @@ const HelpCenter = () => {
         <p>Our team will investigate the issue and take appropriate action.</p>
       </div>
 
-      {/* <Social /> */}
+      
     </div>
   );
 }

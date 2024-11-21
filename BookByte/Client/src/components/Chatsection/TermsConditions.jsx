@@ -32,7 +32,7 @@ const TermsConditions = () => {
         </ul>
       </section>
 
-      {/* Continue similarly for other sections */}
+    
     </div>
   );
 };
