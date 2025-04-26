@@ -21,8 +21,9 @@ function CreateRoomForm({ onCreateRoom }) {
       return;
     }
 
-    const link = generateRoomLink(roomName);
+    const link = generateRoomLink(roomName); // 🔥 generate link only once
     setRoomLink(link);
+
     if (onCreateRoom) {
       onCreateRoom(roomName, link);
     } else {
@@ -31,8 +32,8 @@ function CreateRoomForm({ onCreateRoom }) {
 
     try {
       setTimeout(() => {
-        const uniqueId = link.split('/').pop(); 
-        navigate(`/ChatRoom/${uniqueId}`, { state: { roomLink: link } });
+        const roomPath = link.split('/').pop(); // 🔥 use the same link
+        navigate(`/ChatRoom/${roomPath}`, { state: { roomLink: link } });
       }, 1000);
     } catch (err) {
       console.error('Navigation error:', err);
@@ -79,5 +80,3 @@ function CreateRoomForm({ onCreateRoom }) {
 }
 
 export default CreateRoomForm;
-
-

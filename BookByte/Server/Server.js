@@ -5,8 +5,19 @@ const cors = require('cors');
 const signupRoutes = require('./Signup');
 const bookRoutes = require('./books'); 
 const chatRoutes = require('./chat');
+const http = require('http');   // <--- ADD
+const { Server } = require('socket.io'); // <--- ADD
 
 const app = express();
+
+const server = http.createServer(app); // <--- USE server instead of app.listen
+const io = new Server(server, {
+  cors: {
+    origin: "*", // adjust if you want strict security
+    methods: ["GET", "POST"]
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 
 
@@ -46,8 +57,34 @@ app.use(signupRoutes);
 app.use(bookRoutes); 
 app.use(chatRoutes);
 
+// Socket.IO connection
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
 
-app.listen(PORT, () => {
+  socket.on('join_room', (roomId) => {
+    socket.join(roomId);
+    console.log(`User ${socket.id} joined room ${roomId}`);
+  });
+
+  socket.on('send_message', (data) => {
+    io.to(data.roomId).emit('receive_message', data);
+  });
+
+  socket.on('typing', (data) => {
+    socket.to(data.roomId).emit('typing', data);
+  });
+  
+  socket.on('stop_typing', (data) => {
+    socket.to(data.roomId).emit('stop_typing', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
+
+server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
