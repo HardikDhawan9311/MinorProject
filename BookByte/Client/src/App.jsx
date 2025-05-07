@@ -14,6 +14,7 @@ import Logout from '../src/components/Chatsection/Logout.jsx';
 import BookMainPage from '../src/components/Buysection/BookMainPage.jsx';
 import Login from '../src/components/Homepage/Login.jsx';
 import AddToCart from '../src/components/Buysection/AddToCart.jsx';
+import OrderForm from '../src/components/Buysection/CheckOut.jsx';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/help-center" element={<HelpCenter />} />
         <Route path="/addtocart" element={<AddToCart />} />
+        <Route path="/order" element={<OrderForm />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
