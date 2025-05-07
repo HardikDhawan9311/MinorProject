@@ -22,6 +22,14 @@ const BookMainPage = () => {
   }
 
   const handleAddToCart = () => {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    
+    // Avoid duplicates (optional)
+    if (!cartItems.includes(book.isbn_no)) {
+      cartItems.push(book.isbn_no);
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }
+  
     setIsPopupVisible(true);
     setTimeout(() => {
       setIsPopupVisible(false);

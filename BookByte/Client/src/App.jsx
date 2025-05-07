@@ -12,12 +12,15 @@ import PrivacyPolicy from '../src/components/Chatsection/PrivacyPolicy.jsx';
 import HelpCenter from '../src/components/Chatsection/HelpCenter.jsx';
 import Logout from '../src/components/Chatsection/Logout.jsx';
 import BookMainPage from '../src/components/Buysection/BookMainPage.jsx';
+import Login from '../src/components/Homepage/Login.jsx';
+import AddToCart from '../src/components/Buysection/AddToCart.jsx';
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/buypage" element={<Buypage />} />
         <Route path="/chat" element={<Chatpage />} />
         <Route path="/ChatRoom/:id" element={<ChatRoom />} />
@@ -28,6 +31,7 @@ function App() {
         <Route path="/ChatRoom/:roomId" element={<ChatRoom />} />
         <Route path="/terms-conditions" element={<TermsConditions />} />
         <Route path="/help-center" element={<HelpCenter />} />
+        <Route path="/addtocart" element={<AddToCart />} />
         <Route path="/logout" element={<Logout />} />
       </Routes>
     </BrowserRouter>
