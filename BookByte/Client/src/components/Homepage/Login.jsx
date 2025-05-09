@@ -19,6 +19,8 @@ const Login = () => {
       const response = await axios.post('http://localhost:5000/login', loginData);
       if (response.data.success) {
         localStorage.setItem('user', JSON.stringify(response.data.user));
+
+        localStorage.setItem('username', response.data.user.username);
         navigate('/');
         window.location.reload();
       }

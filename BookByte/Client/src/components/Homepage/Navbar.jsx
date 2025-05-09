@@ -241,7 +241,7 @@ const Navbar = ({ isAuthenticated, userName }) => {
   };
 
   const handleAccountClick = () => {
-    navigate('/account');
+    navigate('/addtocart');
   };
 
   return (
@@ -285,7 +285,7 @@ const Navbar = ({ isAuthenticated, userName }) => {
                       className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                       onClick={handleAccountClick}
                     >
-                      Account
+                      Add To Cart
                     </li>
                     <li
                       className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"

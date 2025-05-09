@@ -43,4 +43,22 @@ router.post('/login', (req, res) => {
   });
 });
 
+// GET user profile (email & phone) by username
+router.get('/profile/:username', (req, res) => {
+  const { username } = req.params;
+  const db = req.db;
+
+  const query = 'SELECT email, phonenumber AS phone FROM signup WHERE username = ?';
+
+  db.query(query, [username], (err, result) => {
+    if (err) return res.status(500).json({ error: 'An error occurred' });
+
+    if (result.length > 0) {
+      res.status(200).json(result[0]);  // { email: ..., phone: ... }
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  });
+});
+
 module.exports = router;

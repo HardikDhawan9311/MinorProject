@@ -7,6 +7,7 @@ const bookRoutes = require('./books');
 const chatRoutes = require('./chat');
 const http = require('http');   // <--- ADD
 const { Server } = require('socket.io'); // <--- ADD
+const razorpay = require('./payments');
 
 const app = express();
 
@@ -89,16 +90,34 @@ server.listen(PORT, () => {
 });
 
 
-app.get('/books/isbn_no', (req, res) => {
-  const { isbn_no } = req.params;
-pool.execute('SELECT * FROM books WHERE isbn_no = ?', [isbn_no], (err, results) => {
-  if (err) {
-    return res.status(500).json({ message: 'Error fetching book details' });
-  }
-  if (results.length > 0) {
-    res.json(results[0]); 
-  } else {
-    res.status(404).json({ message: 'Book not found' });
+// Razorpay order route — place this OUTSIDE any other route
+app.post('/create-order', async (req, res) => {
+  const { amount, currency = 'INR', receipt = 'receipt#1' } = req.body;
+
+  try {
+    const order = await razorpay.orders.create({
+      amount: amount * 100, // convert to paise
+      currency,
+      receipt,
+    });
+    res.status(200).json(order);
+  } catch (error) {
+    console.error('Razorpay Order Error:', error);
+    res.status(500).json({ message: 'Payment order creation failed' });
   }
 });
+
+// Fix this route as well
+app.get('/books/isbn_no', (req, res) => {
+  const { isbn_no } = req.query;
+  db.execute('SELECT * FROM books WHERE isbn_no = ?', [isbn_no], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Error fetching book details' });
+    }
+    if (results.length > 0) {
+      res.json(results[0]);
+    } else {
+      res.status(404).json({ message: 'Book not found' });
+    }
+  });
 });
