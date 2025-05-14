@@ -75,7 +75,7 @@ function App() {
           <div className='flex flex-col'>
           <h1 className='relative font-bold mt-24 text-white ml-24 text-center text-6xl'>
           Welcome to </h1>
-          <h1 className='relative font-bold mt-12 text-white ml-28 text-center text-6xl'>BookByte</h1>
+          <h1 className='relative font-bold mt-12 text-white ml-28 text-center text-6xl'>ReadHive</h1>
           </div>
         <img src={Img} alt="img" className='relative mt-8 mr-11 w-3/6 h-96' />
         </div>
@@ -85,7 +85,7 @@ function App() {
           <div className="flex-grow h-1 mt-4 ml-14 mr-14 bg-gradient-to-r from-orange-400 via-pink-500 to-pink-700 ml-4"></div>
           <div className="flex items-center justify-center h-96">
       <div className="w-full max-w-4xl h-3/4 mx-4 text-center p-8 text-white text-xl md:text-xl border border-gray-600 shadow-lg rounded-lg">
-        <p>Welcome to BookByte, a free platform designed for book lovers to easily explore, buy, and enjoy books. Not only can you browse and purchase a wide variety of books, but you can also join communities dedicated to your favorite reads. Connect with fellow enthusiasts, share thoughts, and build meaningful connections with people who share your literary passions. Whether you're on the hunt for your next great read or looking to engage in thoughtful discussions, BookByte has you covered. Experience a seamless blend of book shopping and social interaction. Happy BookByting!</p>
+        <p>Welcome to ReadHive, a free platform designed for book lovers to easily explore, buy, and enjoy books. Not only can you browse and purchase a wide variety of books, but you can also join communities dedicated to your favorite reads. Connect with fellow enthusiasts, share thoughts, and build meaningful connections with people who share your literary passions. Whether you're on the hunt for your next great read or looking to engage in thoughtful discussions, ReadHive has you covered. Experience a seamless blend of book shopping and social interaction. Happy BookByting!</p>
       </div>
     </div>
         </div>
@@ -95,7 +95,7 @@ function App() {
           <div className="flex-grow h-1 mt-4 ml-14 mr-14 bg-gradient-to-r from-orange-400 via-pink-500 to-pink-700 ml-4"></div>
           <div className="flex items-center justify-center h-96">
       <div className="w-full max-w-4xl h-3/4 mx-4 text-center p-8 text-white text-xl md:text-xl border border-gray-600 shadow-lg rounded-lg">
-        <p>Welcome to BookByte. It's a free plattform where the bookbublies can easily buy any books. And cherry on top, they can also join communities of their favourite books and connect with people of their own kind. Happy BookByting !!</p>
+        <p>Welcome to ReadHive. It's a free plattform where the bookbublies can easily buy any books. And cherry on top, they can also join communities of their favourite books and connect with people of their own kind. Happy BookByting !!</p>
       </div>
     </div>
         </div>

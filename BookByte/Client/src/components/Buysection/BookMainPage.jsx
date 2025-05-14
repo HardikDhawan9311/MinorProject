@@ -96,7 +96,7 @@ const BookMainPage = () => {
             </div>
 
             <div className="w-full lg:w-1/3 lg:mt-0 mt-8">
-              <h3 className="text-3xl font-extrabold text-gray-800 mb-6">Price: ${book.price || 'N/A'}</h3>
+              <h3 className="text-3xl font-extrabold text-gray-800 mb-6">Price: Rs {book.price || 'N/A'}</h3>
               <p className="text-lg text-gray-600 mb-4">
                 Delivery in: <span className="font-bold">3-5 days</span>
               </p>

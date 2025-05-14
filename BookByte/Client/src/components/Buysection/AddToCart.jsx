@@ -553,7 +553,7 @@ const AddToCartPage = () => {
                         <div>
                           <h2 className="text-xl font-semibold text-gray-800">{book.book_name}</h2>
                           <p className="text-gray-600 mb-2">by {book.author_name}</p>
-                          <p className="text-lg font-medium text-gray-900">Price: ${book.price}</p>
+                          <p className="text-lg font-medium text-gray-900">Price: Rs {book.price}</p>
                           <p className="text-sm text-gray-500">ISBN: {book.isbn_no}</p>
                           <p className="mt-2">
                             {book.instock ? (
@@ -619,7 +619,7 @@ const AddToCartPage = () => {
               </p>
               <p className="flex justify-between text-gray-700 mb-4">
                 <span>Total Price:</span>
-                <span>${getTotalPrice()}</span>
+                <span>Rs{getTotalPrice()}</span>
               </p>
               <button
                 onClick={handleBuyNow}

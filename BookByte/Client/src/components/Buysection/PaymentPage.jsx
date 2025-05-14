@@ -42,7 +42,7 @@ const PaymentPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const totalAmount = formData.totalPrice * 100;  // Razorpay accepts the amount in paise (1 INR = 100 paise)
+    const totalAmount = formData.totalPrice;  
 
     try {
       const response = await axios.post('http://localhost:5000/create-order', {
